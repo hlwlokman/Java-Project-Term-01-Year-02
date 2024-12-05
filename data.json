@@ -1,0 +1,230 @@
+{
+    "years": [
+      {
+        "year": 1998,
+        "populations": {
+          "konik_horses": 70,
+          "red_deer": 45,
+          "heck_cattle": 135
+        },
+        "grass_height": 28.79
+      },
+      {
+        "year": 1999,
+        "populations": {
+          "konik_horses": 85,
+          "red_deer": 45,
+          "heck_cattle": 170
+        },
+        "grass_height": 27.07
+      },
+      {
+        "year": 2000,
+        "populations": {
+          "konik_horses": 120,
+          "red_deer": 70,
+          "heck_cattle": 195
+        },
+        "grass_height": 27.28
+      },
+      {
+        "year": 2001,
+        "populations": {
+          "konik_horses": 160,
+          "red_deer": 100,
+          "heck_cattle": 240
+        },
+        "grass_height": 26.38
+      },
+      {
+        "year": 2002,
+        "populations": {
+          "konik_horses": 200,
+          "red_deer": 140,
+          "heck_cattle": 280
+        },
+        "grass_height": 25.67
+      },
+      {
+        "year": 2003,
+        "populations": {
+          "konik_horses": 240,
+          "red_deer": 180,
+          "heck_cattle": 340
+        },
+        "grass_height": 25.47
+      },
+      {
+        "year": 2004,
+        "populations": {
+          "konik_horses": 280,
+          "red_deer": 240,
+          "heck_cattle": 390
+        },
+        "grass_height": 22.16
+      },
+      {
+        "year": 2005,
+        "populations": {
+          "konik_horses": 330,
+          "red_deer": 300,
+          "heck_cattle": 450
+        },
+        "grass_height": 23.45
+      },
+      {
+        "year": 2006,
+        "populations": {
+          "konik_horses": 390,
+          "red_deer": 380,
+          "heck_cattle": 500
+        },
+        "grass_height": 23.98
+      },
+      {
+        "year": 2007,
+        "populations": {
+          "konik_horses": 450,
+          "red_deer": 460,
+          "heck_cattle": 510
+        },
+        "grass_height": 22.75
+      },
+      {
+        "year": 2008,
+        "populations": {
+          "konik_horses": 520,
+          "red_deer": 590,
+          "heck_cattle": 580
+        },
+        "grass_height": 22.93
+      },
+      {
+        "year": 2009,
+        "populations": {
+          "konik_horses": 580,
+          "red_deer": 610,
+          "heck_cattle": 770
+        },
+        "grass_height": 21.92
+      },
+      {
+        "year": 2010,
+        "populations": {
+          "konik_horses": 640,
+          "red_deer": 700,
+          "heck_cattle": 1000
+        },
+        "grass_height": 22.67
+      },
+      {
+        "year": 2011,
+        "populations": {
+          "konik_horses": 589,
+          "red_deer": 800,
+          "heck_cattle": 1150
+        },
+        "grass_height": 18.14
+      },
+      {
+        "year": 2012,
+        "populations": {
+          "konik_horses": 680,
+          "red_deer": 900,
+          "heck_cattle": 1400
+        },
+        "grass_height": 18.32
+      },
+      {
+        "year": 2013,
+        "populations": {
+          "konik_horses": 550,
+          "red_deer": 950,
+          "heck_cattle": 1700
+        },
+        "grass_height": 19.14
+      },
+      {
+        "year": 2014,
+        "populations": {
+          "konik_horses": 480,
+          "red_deer": 1000,
+          "heck_cattle": 2000
+        },
+        "grass_height": 19.77
+      },
+      {
+        "year": 2015,
+        "populations": {
+          "konik_horses": 450,
+          "red_deer": 1100,
+          "heck_cattle": 2200
+        },
+        "grass_height": 19.45
+      },
+      {
+        "year": 2016,
+        "populations": {
+          "konik_horses": 450,
+          "red_deer": 1150,
+          "heck_cattle": 2700
+        },
+        "grass_height": 18.14
+      },
+      {
+        "year": 2017,
+        "populations": {
+          "konik_horses": 400,
+          "red_deer": 1150,
+          "heck_cattle": 3000
+        },
+        "grass_height": 18.05
+      },
+      {
+        "year": 2018,
+        "populations": {
+          "konik_horses": 320,
+          "red_deer": 1050,
+          "heck_cattle": 3050
+        },
+        "grass_height": 16.93
+      },
+      {
+        "year": 2019,
+        "populations": {
+          "konik_horses": 350,
+          "red_deer": 1150,
+          "heck_cattle": 3250
+        },
+        "grass_height": 17.84
+      },
+      {
+        "year": 2020,
+        "populations": {
+          "konik_horses": 310,
+          "red_deer": 1150,
+          "heck_cattle": 3200
+        },
+        "grass_height": 16.49
+      },
+      {
+        "year": 2021,
+        "populations": {
+          "konik_horses": 200,
+          "red_deer": 990,
+          "heck_cattle": 2500
+        },
+        "grass_height": 15.25
+      },
+      {
+        "year": 2022,
+        "populations": {
+          "konik_horses": 1250,
+          "red_deer": 3200,
+          "heck_cattle": 250
+        },
+        "grass_height": 15.01
+      }
+    ]
+  }
+  
