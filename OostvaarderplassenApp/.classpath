@@ -6,6 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="scr/main/java"/>
+	<classpathentry kind="src" path="scr/test/java"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
