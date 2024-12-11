@@ -1,13 +1,13 @@
-package system;
+package environment;
 
 import models.HerbivorePopulation;
 
-public class EcologicalSystem {
+public class EnvironmentalFactorsTest {
     private HerbivorePopulation heckCattle;
     private HerbivorePopulation konikHorses;
     private HerbivorePopulation redDeer;
 
-    public EcologicalSystem(int cattlePopulation, int horsePopulation, int deerPopulation) {
+    public EnvironmentalFactorsTest(int cattlePopulation, int horsePopulation, int deerPopulation) {
         heckCattle = new HerbivorePopulation("Heck Cattle", cattlePopulation);
         konikHorses = new HerbivorePopulation("Konik Horses", horsePopulation);
         redDeer = new HerbivorePopulation("Red Deer", deerPopulation);
