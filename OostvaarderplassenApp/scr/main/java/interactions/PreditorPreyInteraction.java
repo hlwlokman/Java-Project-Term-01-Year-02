@@ -12,7 +12,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-public class PreditorPreyInteractions {
+public class PreditorPreyInteraction {
     static double r = 1;  // Deer growth rate
     static double K = 10000; // Carrying capacity, deer population
     static double a = 0.015;  // Predation rate
