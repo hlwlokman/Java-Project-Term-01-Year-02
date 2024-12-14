@@ -7,3 +7,4 @@ public class Main {
         IntegratedPredatorPrey.main(args);  // Call the PredatorPreyInteraction logic
     }
 }
+2

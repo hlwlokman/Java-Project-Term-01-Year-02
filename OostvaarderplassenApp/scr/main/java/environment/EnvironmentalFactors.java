@@ -33,7 +33,7 @@ public class EnvironmentalFactors {
         try {
             // Load data from the JSON file
             ObjectMapper objectMapper = new ObjectMapper();
-            File file = new File("C:\\Git Projects\\oostvaardersplassen\\OostvaarderplassenApp\\data.json");
+            File file = new File("C:\\Git Projects\\oostvaardersplassen\\OostvaarderplassenApp\\animals_on_january_1st.json");
             Map<String, Object> data = objectMapper.readValue(file, Map.class);
 
             // Prompt user to select a target year
@@ -43,7 +43,7 @@ public class EnvironmentalFactors {
 
             // Find the data for the selected year
             Map<String, Object> selectedYearData = null;
-            for (Map<String, Object> yearData : (Iterable<Map<String, Object>>) data.get("years")) {
+            for (Map<String, Object> yearData : (Iterable<Map<String, Object>>) data.get("animals_on_january_1")) {
                 if ((int) yearData.get("year") == targetYear) {
                     selectedYearData = yearData;
                     break;
