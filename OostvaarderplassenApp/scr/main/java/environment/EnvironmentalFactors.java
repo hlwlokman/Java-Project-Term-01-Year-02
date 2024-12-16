@@ -1,6 +1,8 @@
 package environment;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -9,7 +11,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class EnvironmentalFactors {
     private static final int TOTAL_FORAGE_KG = 15000000; // Total forage in kg/year
     private static final double COMPETITION_FACTOR = 0.85; // 15% reduction for competition
-    private static final double BASE_GRASS_HEIGHT = 28.79; // Grass height in 1998 (cm)
+    public static final double BASE_GRASS_HEIGHT = 28.79; // Grass height in 1998 (cm)
+
+    public static double loadGrassHeight(String filePath) {
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(filePath)));
+            return Double.parseDouble(content.trim());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error loading grass height from file: " + filePath);
+            return 0.0; // Return a default value
+            
+        }
+    }
 
     // Calculate the carrying capacity
     public static int calculateCarryingCapacity(int dailyNeedKg, double allocationPercentage, double grassHeight) {

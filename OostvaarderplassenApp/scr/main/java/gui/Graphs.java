@@ -1,62 +1,109 @@
 package gui;
 
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.DefaultCategoryDataset;
+import javafx.scene.Node;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Tooltip;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
-import javax.swing.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
-public class Graphs {
-    public static void main(String[] args) {
-        String fisierExcel = "C:/Users/giuli/OneDrive/Desktop/Inholland/Year 2/Project Dev/ecological-system-simulator/Number of large herbivores in the Oostvaardersplassen 1990 - 2022.xlsx";
+public class Graphs extends StackPane {
+    private BarChart<String, Number> barChart;
 
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+    private XYChart.Series<String, Number> cattleSeries = new XYChart.Series<>();
+    private XYChart.Series<String, Number> deerSeries = new XYChart.Series<>();
+    private XYChart.Series<String, Number> horsesSeries = new XYChart.Series<>();
 
-        try (FileInputStream fis = new FileInputStream(new File(fisierExcel));
-             Workbook workbook = new XSSFWorkbook(fis)) {
-            Sheet sheet = workbook.getSheetAt(0);
+    public Graphs() {
+        // Create and style axes
+        CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel("Year");
+        xAxis.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill:rgb(18, 37, 56);");
 
-            for (Row row : sheet) {
-                // Presupunem că datele sunt în prima și a doua coloană
-                Cell cellX = row.getCell(0); // Axa X
-                Cell cellY = row.getCell(1);
-                Cell cellZ = row.getCell(2);
-                Cell cellW = row.getCell(3);
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Population");
+        yAxis.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: rgb(18, 37, 56);");
 
-                if (cellX != null && cellY != null && cellZ != null && cellW != null) {
-                    double year = cellx.getNumericCellValue();
-                    double cattleValue= cellY.getNumericCellValue();
-                    double horsesValue = cellZ.getNumericCellValue();
-                    double deerValue = cellW.getNumericCellValue();
+        // Create the BarChart using the axes
+        barChart = new BarChart<>(xAxis, yAxis);
+        barChart.setTitle("Ecosystem Population Over the Years");
+        barChart.setStyle("-fx-background-color: linear-gradient(to bottom, #f3f4f6, #dceefc);-fx-background-radius: 10");
 
-                    dataset.addValue(cattleValue, "Cattle", String.valueOf(1));
-                    dataset.addValue(horsesValue, "Horses", String.valueOf(2));
-                    dataset.addValue(deerValue, "Deer", String.valueOf(3));
+        // Add series to the chart
+        cattleSeries.setName("Cattle");
+        deerSeries.setName("Deer");
+        horsesSeries.setName("Horses");
+        
+
+        barChart.getData().addAll(cattleSeries, deerSeries, horsesSeries);
+
+        // Customize the bars and legend
+        customizeBars();
+        customizeLegend();
+
+        // Add chart to the layout
+        getChildren().add(barChart);
+    }
+
+
+    // Helper method to create data points with tooltips and effects
+    private XYChart.Data<String, Number> createDataWithTooltip(String x, double y) {
+        XYChart.Data<String, Number> data = new XYChart.Data<>(x, y);
+        Tooltip tooltip = new Tooltip("Year: " + x + "\nPopulation: " + y);
+        tooltip.setShowDelay(Duration.millis(100));
+        tooltip.setHideDelay(Duration.millis(200));
+        Tooltip.install(data.getNode(), tooltip);
+
+        // Add shadow and rounded corners to the bars
+        data.nodeProperty().addListener((obs, oldNode, newNode) -> {
+            if (newNode != null) {
+                newNode.setEffect(new DropShadow(10, Color.BLACK));
+                if (newNode instanceof Rectangle) {
+                    ((Rectangle) newNode).setArcWidth(15);
+                    ((Rectangle) newNode).setArcHeight(15);
+                    ((Rectangle) newNode).setStyle("-fx-fill: linear-gradient(to top, #4caf50, #81c784);");
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
 
-        // Creează graficul
-        JFreeChart barChart = ChartFactory.createBarChart(
-                "Ecosystem plot",        
-                "Animal",           
-                "Year",             
-                dataset
-        );
+        return data;
+    }
 
-        // Afișează graficul într-o fereastră
-        JFrame frame = new JFrame("Grafic din Excel");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(new ChartPanel(barChart));
-        frame.pack();
-        frame.setVisible(true);
+    // Customize the legend appearance
+    private void customizeLegend() {
+        barChart.lookupAll(".chart-legend-item").forEach(node -> {
+            if (node instanceof StackPane) {
+                StackPane stackPane = (StackPane) node;
+                stackPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-background-radius: 10;");
+            }
+        });
+    }
+
+    // Customize the bars for a modern look
+    private void customizeBars() {
+        barChart.getData().forEach(series -> {
+            series.getData().forEach(data -> {
+                Node bar = data.getNode();
+                if (bar != null && bar instanceof Rectangle) {
+                    Rectangle rectangle = (Rectangle) bar;
+                    rectangle.setArcWidth(10);
+                    rectangle.setArcHeight(10);
+                    rectangle.setStyle("-fx-fill: linear-gradient(to top, #3b5998, #8b9dc3);");
+                }
+            });
+        });
+    }
+
+    // Method to update the graph’s data dynamically
+    public void updateData(int deerValue, int horsesValue, int cattleValue, String yearLabel) {
+        cattleSeries.getData().add(createDataWithTooltip(yearLabel, cattleValue));
+        deerSeries.getData().add(createDataWithTooltip(yearLabel, deerValue));
+        horsesSeries.getData().add(createDataWithTooltip(yearLabel, horsesValue));
     }
 }
