@@ -1,0 +1,10 @@
+{
+    "java.home": "C:/Java/jdk-17.0.2",  // Path to your JDK 17
+    "maven.executable.path": "C:/Program Files/Apache/Maven/apache-maven-3.9.9/bin/mvn",  // Path to your Maven executable (if not in PATH)
+    "java.configuration.classpath": [
+        "target/classes",
+        "target/test-classes",
+        "src/main/resources",
+        "src/test/resources"
+    ]
+}

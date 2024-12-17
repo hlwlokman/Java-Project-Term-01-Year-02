@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 
 
 
+
 public class ControlPanel extends VBox {
 
     private Graphs graphs;
@@ -24,10 +25,10 @@ public class ControlPanel extends VBox {
     public ControlPanel(Graphs graphs) {
         this.graphs = graphs;
         // Imagini
-        Image image1 = new Image(getClass().getResourceAsStream("/Oostvaarderplassen/deer4.png"));
-        Image image2 = new Image(getClass().getResourceAsStream("/Oostvaarderplassen/horse2.png"));
-        Image image3 = new Image(getClass().getResourceAsStream("/Oostvaarderplassen/cattle12.png"));
-        Image image4 = new Image(getClass().getResourceAsStream("/Oostvaarderplassen/wolf.png"));
+        Image image1 = new Image(getClass().getResourceAsStream("/images/deer4.png"));
+        Image image2 = new Image(getClass().getResourceAsStream("/images/horse2.png"));
+        Image image3 = new Image(getClass().getResourceAsStream("/images/cattle12.png"));
+        Image image4 = new Image(getClass().getResourceAsStream("/images/wolf.png"));
 
         ImageView iv1 = new ImageView(image1);
         ImageView iv2 = new ImageView(image2);
@@ -108,6 +109,4 @@ public class ControlPanel extends VBox {
             // Update the graph with the selected values
             graphs.updateData(deerValue, horsesValue, cattleValue, "Year " + currentYear);
 }
-}
-    
-
+}  

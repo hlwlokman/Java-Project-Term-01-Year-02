@@ -47,7 +47,7 @@ public class EnvironmentalFactors {
         try {
             // Load data from the JSON file
             ObjectMapper objectMapper = new ObjectMapper();
-            File file = new File("C:\\Git Projects\\oostvaardersplassen\\OostvaarderplassenApp\\animals_on_january_1st.json");
+            File file = new File("C:\\Git Projects\\oostvaardersplassen\\OostvaarderplassenApp\\sct\\main\\resources\\animals_on_january_1st.json");
             Map<String, Object> data = objectMapper.readValue(file, Map.class);
 
             // Prompt user to select a target year
