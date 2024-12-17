@@ -143,6 +143,13 @@
                         <goals>
                             <goal>java</goal>
                         </goals>
+                        <configuration>
+                            <mainClass>system.Main</mainClass>
+                            <jvmArgs>
+                                --module-path C:/javafx-sdk-17.0.13/lib
+                                --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base
+                            </jvmArgs>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
