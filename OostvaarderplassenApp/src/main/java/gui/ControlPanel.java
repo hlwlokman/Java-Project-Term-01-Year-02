@@ -1,112 +1,48 @@
 package gui;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-
-
-
 public class ControlPanel extends VBox {
+    private final Graphs graphs;
+    private boolean wolvesIntroduced = false;
 
-    private Graphs graphs;
-
-    private int deerPopulation= 100;
-    private int horsesPopulation = 50;
-    private int cattlePopulation= 30;
-    private int currentYear = 2024; 
+    private Label carryingCapacityLabel;
+    private Label grassHeightLabel;
 
     public ControlPanel(Graphs graphs) {
         this.graphs = graphs;
-        // Imagini
-        Image image1 = new Image(getClass().getResourceAsStream("/images/deer4.png"));
-        Image image2 = new Image(getClass().getResourceAsStream("/images/horse2.png"));
-        Image image3 = new Image(getClass().getResourceAsStream("/images/cattle12.png"));
-        Image image4 = new Image(getClass().getResourceAsStream("/images/wolf.png"));
+        setSpacing(10);
 
-        ImageView iv1 = new ImageView(image1);
-        ImageView iv2 = new ImageView(image2);
-        ImageView iv3 = new ImageView(image3);
-        ImageView iv4 = new ImageView(image4);
-
-        iv1.setFitWidth(50); // dimensions
-        iv1.setPreserveRatio(true);
-        iv2.setFitWidth(50);
-        iv2.setPreserveRatio(true);
-        iv3.setFitWidth(50);
-        iv3.setPreserveRatio(true);
-        iv4.setFitWidth(50);
-        iv4.setPreserveRatio(true);
-
-        // Casete de bifat
-        CheckBox cattle = new CheckBox("Cattle");
-        CheckBox deer = new CheckBox("Deer");
-        CheckBox horses = new CheckBox("Horses");
-
-        // Stilizare casete
-        String fontStyle = "-fx-font-size: 20px";
-        deer.setStyle(fontStyle);
-        horses.setStyle(fontStyle);
-        cattle.setStyle(fontStyle);
-
-        // HBox pentru fiecare opțiune
-        HBox deerOption = new HBox(10, deer, iv1);
-        HBox horsesOption = new HBox(10, horses, iv2);
-        HBox cattleOption = new HBox(10, cattle, iv3);
-
-        deerOption.setPadding(new Insets(5));
-        horsesOption.setPadding(new Insets(5));
-        cattleOption.setPadding(new Insets(5));
-
-        //wolf button
-        Button wolvesButton = new Button("Wolves");
-        wolvesButton.setGraphic(iv4);
-        wolvesButton.setLayoutX(30);
-        wolvesButton.setLayoutY(20);
-        wolvesButton.setStyle("-fx-background-color: red; -fx-background-radius: 20; -fx-text-fill: white; -fx-font-size: 15px;");
-        
-        wolvesButton.setOnAction(e -> System.out.println("Wolves are released!"));
-
-        // Adăugăm opțiunile în VBox
-        this.setSpacing(10);
-        this.setPadding(new Insets(40, 50, 10, 10));
-        this.getChildren().addAll(cattleOption, deerOption, horsesOption, wolvesButton);
-
-        deer.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                updateGraph(deer.isSelected(), horses.isSelected(), cattle.isSelected());
-            }
+        // Year Selector
+        ComboBox<Integer> yearSelector = new ComboBox<>();
+        yearSelector.getItems().addAll(2020, 2021, 2022, 2023, 2024);
+        yearSelector.setValue(2024);
+        yearSelector.setOnAction(e -> {
+            int selectedYear = yearSelector.getValue();
+            graphs.updateYear(selectedYear);
         });
 
-        horses.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                updateGraph(deer.isSelected(), horses.isSelected(), cattle.isSelected());
-            }
+        // Wolf Button
+        Button wolfButton = new Button("Introduce Wolves");
+        wolfButton.setOnAction(e -> {
+            wolvesIntroduced = !wolvesIntroduced;
+            graphs.recalculateWithWolves(wolvesIntroduced);
+            wolfButton.setText(wolvesIntroduced ? "Remove Wolves" : "Introduce Wolves");
         });
 
-        cattle.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                updateGraph(deer.isSelected(), horses.isSelected(), cattle.isSelected());
-            }
-        });
+        // Carrying Capacity and Grass Height Labels
+        carryingCapacityLabel = new Label("Carrying Capacity: N/A");
+        grassHeightLabel = new Label("Grass Height: N/A");
 
+        getChildren().addAll(yearSelector, wolfButton, carryingCapacityLabel, grassHeightLabel);
+    }
+
+    // Update simulation values dynamically
+    public void updateSimulationValues(double carryingCapacity, double grassHeight) {
+        carryingCapacityLabel.setText("Carrying Capacity: " + carryingCapacity);
+        grassHeightLabel.setText("Grass Height: " + grassHeight + " cm");
+    }
 }
-        private void updateGraph(boolean deerSelected, boolean horsesSelected, boolean cattleSelected) {
-            // Set values based on whether the checkboxes are selected
-            int deerValue = deerSelected ? deerPopulation : 0;
-            int horsesValue = horsesSelected ? horsesPopulation : 0;
-            int cattleValue = cattleSelected ? cattlePopulation : 0;
-
-            // Update the graph with the selected values
-            graphs.updateData(deerValue, horsesValue, cattleValue, "Year " + currentYear);
-}
-}  

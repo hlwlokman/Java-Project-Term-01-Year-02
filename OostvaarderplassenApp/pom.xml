@@ -97,6 +97,7 @@
             <version>1.9.2</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -137,22 +138,17 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>default-cli</id>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                        <configuration>
-                            <mainClass>system.Main</mainClass>
-                            <jvmArgs>
-                                --module-path C:/javafx-sdk-17.0.13/lib
-                                --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base
-                            </jvmArgs>
-                        </configuration>
-                    </execution>
-                </executions>
+                <version>3.0.0</version>
+                <configuration>
+                    <mainClass>system.Main</mainClass> <!-- Replace with your actual main class -->
+                    <classpathScope>runtime</classpathScope>
+                    <arguments>
+                        <argument>--module-path</argument>
+                        <argument>C:/javafx-sdk-17.0.13/lib</argument> <!-- Absolute path to JavaFX SDK -->
+                        <argument>--add-modules</argument>
+                        <argument>javafx.controls,javafx.fxml,javafx.graphics,javafx.base</argument>
+                    </arguments>
+                </configuration>
             </plugin>
             
         </plugins>

@@ -1,109 +1,79 @@
 package gui;
 
-import javafx.scene.Node;
+import java.util.Map;
+
+import environment.EnvironmentalFactors;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Tooltip;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
+public class Graphs extends BorderPane {
+    private final BarChart<String, Number> barChart;
+    private final XYChart.Series<String, Number> series;
+    private final EnvironmentalFactors factors;
+    private Label carryingCapacityLabel;
+    private Label grassHeightLabel;
 
-public class Graphs extends StackPane {
-    private BarChart<String, Number> barChart;
+    public Graphs(EnvironmentalFactors factors) {
+        this.factors = factors;
 
-    private XYChart.Series<String, Number> cattleSeries = new XYChart.Series<>();
-    private XYChart.Series<String, Number> deerSeries = new XYChart.Series<>();
-    private XYChart.Series<String, Number> horsesSeries = new XYChart.Series<>();
-
-    public Graphs() {
-        // Create and style axes
+        // Axes for the BarChart
         CategoryAxis xAxis = new CategoryAxis();
-        xAxis.setLabel("Year");
-        xAxis.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill:rgb(18, 37, 56);");
-
         NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Species");
         yAxis.setLabel("Population");
-        yAxis.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: rgb(18, 37, 56);");
 
-        // Create the BarChart using the axes
+        // Initialize the BarChart
         barChart = new BarChart<>(xAxis, yAxis);
         barChart.setTitle("Ecosystem Population Over the Years");
-        barChart.setStyle("-fx-background-color: linear-gradient(to bottom, #f3f4f6, #dceefc);-fx-background-radius: 10");
 
-        // Add series to the chart
-        cattleSeries.setName("Cattle");
-        deerSeries.setName("Deer");
-        horsesSeries.setName("Horses");
-        
+        series = new XYChart.Series<>();
+        barChart.getData().add(series);
 
-        barChart.getData().addAll(cattleSeries, deerSeries, horsesSeries);
+        // Labels for carrying capacity and grass height
+        carryingCapacityLabel = new Label("Carrying Capacity: N/A");
+        grassHeightLabel = new Label("Grass Height: N/A");
 
-        // Customize the bars and legend
-        customizeBars();
-        customizeLegend();
+        updateChart(2024, false); // Initialize with default year and no wolves
 
-        // Add chart to the layout
-        getChildren().add(barChart);
+        this.setCenter(barChart); // Set chart as center
+        this.setBottom(new VBox(carryingCapacityLabel, grassHeightLabel)); // Set labels at the bottom
     }
 
-
-    // Helper method to create data points with tooltips and effects
-    private XYChart.Data<String, Number> createDataWithTooltip(String x, double y) {
-        XYChart.Data<String, Number> data = new XYChart.Data<>(x, y);
-        Tooltip tooltip = new Tooltip("Year: " + x + "\nPopulation: " + y);
-        tooltip.setShowDelay(Duration.millis(100));
-        tooltip.setHideDelay(Duration.millis(200));
-        Tooltip.install(data.getNode(), tooltip);
-
-        // Add shadow and rounded corners to the bars
-        data.nodeProperty().addListener((obs, oldNode, newNode) -> {
-            if (newNode != null) {
-                newNode.setEffect(new DropShadow(10, Color.BLACK));
-                if (newNode instanceof Rectangle) {
-                    ((Rectangle) newNode).setArcWidth(15);
-                    ((Rectangle) newNode).setArcHeight(15);
-                    ((Rectangle) newNode).setStyle("-fx-fill: linear-gradient(to top, #4caf50, #81c784);");
-                }
-            }
-        });
-
-        return data;
+    public void updateYear(int year) {
+        updateChart(year, false); // Pass false if wolves are not introduced by default
     }
 
-    // Customize the legend appearance
-    private void customizeLegend() {
-        barChart.lookupAll(".chart-legend-item").forEach(node -> {
-            if (node instanceof StackPane) {
-                StackPane stackPane = (StackPane) node;
-                stackPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-background-radius: 10;");
-            }
-        });
+    public void recalculateWithWolves(boolean wolves) {
+        updateChart(2024, wolves); // You can adjust this to use a dynamic year from the ComboBox
     }
 
-    // Customize the bars for a modern look
-    private void customizeBars() {
-        barChart.getData().forEach(series -> {
-            series.getData().forEach(data -> {
-                Node bar = data.getNode();
-                if (bar != null && bar instanceof Rectangle) {
-                    Rectangle rectangle = (Rectangle) bar;
-                    rectangle.setArcWidth(10);
-                    rectangle.setArcHeight(10);
-                    rectangle.setStyle("-fx-fill: linear-gradient(to top, #3b5998, #8b9dc3);");
-                }
-            });
-        });
-    }
+    private void updateChart(int year, boolean wolves) {
+        // Clear previous data
+        series.getData().clear();
 
-    // Method to update the graph’s data dynamically
-    public void updateData(int deerValue, int horsesValue, int cattleValue, String yearLabel) {
-        cattleSeries.getData().add(createDataWithTooltip(yearLabel, cattleValue));
-        deerSeries.getData().add(createDataWithTooltip(yearLabel, deerValue));
-        horsesSeries.getData().add(createDataWithTooltip(yearLabel, horsesValue));
+        // Get the population for the selected year and wolves status
+        Map<String, Integer> populationData = Map.of(
+                "Cattle", factors.getPopulationForSpecies("Cattle", year, wolves),
+                "Deer", factors.getPopulationForSpecies("Deer", year, wolves),
+                "Horses", factors.getPopulationForSpecies("Horses", year, wolves)
+        );
+
+        // Add data to the chart
+        series.getData().add(new XYChart.Data<>("Cattle", populationData.get("Cattle")));
+        series.getData().add(new XYChart.Data<>("Deer", populationData.get("Deer")));
+        series.getData().add(new XYChart.Data<>("Horses", populationData.get("Horses")));
+
+        // Fetch the grass height and calculate carrying capacity
+        double grassHeight = factors.getGrassHeight(year);
+        int carryingCapacity = factors.getCarryingCapacity(10, 0.5, grassHeight); // Adjust parameters as needed
+
+        // Update labels
+        carryingCapacityLabel.setText("Carrying Capacity: " + carryingCapacity);
+        grassHeightLabel.setText("Grass Height: " + grassHeight + " cm");
     }
 }
