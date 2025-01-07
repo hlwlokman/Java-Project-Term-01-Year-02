@@ -9,7 +9,6 @@ public class SimulationArea extends Pane {
     private Canvas canvas;
 
     public SimulationArea() {
-
         canvas = new Canvas(700, 600);
         getChildren().add(canvas);
         drawInitialGrid(canvas.getGraphicsContext2D());
