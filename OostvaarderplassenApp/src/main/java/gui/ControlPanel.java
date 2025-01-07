@@ -9,40 +9,44 @@ public class ControlPanel extends VBox {
     private final Graphs graphs;
     private boolean wolvesIntroduced = false;
 
-    private Label carryingCapacityLabel;
-    private Label grassHeightLabel;
+    private Label wolfStatusLabel;
 
+    // In the constructor
     public ControlPanel(Graphs graphs) {
         this.graphs = graphs;
         setSpacing(10);
-
+    
         // Year Selector
         ComboBox<Integer> yearSelector = new ComboBox<>();
-        yearSelector.getItems().addAll(2020, 2021, 2022, 2023, 2024);
+        for (int year = 1990; year <= 2030; year++) {
+            yearSelector.getItems().add(year);
+        }
         yearSelector.setValue(2024);
         yearSelector.setOnAction(e -> {
             int selectedYear = yearSelector.getValue();
-            graphs.updateYear(selectedYear);
+            graphs.updateYear(selectedYear); // Update the graphs with the new year
         });
-
-        // Wolf Button
+    
+        // Wolf Button and Status Label
         Button wolfButton = new Button("Introduce Wolves");
+        wolfStatusLabel = new Label(); // Initialize the label
         wolfButton.setOnAction(e -> {
+            int selectedYear = yearSelector.getValue(); // Get the currently selected year
             wolvesIntroduced = !wolvesIntroduced;
-            graphs.recalculateWithWolves(wolvesIntroduced);
+            graphs.recalculateWithWolves(selectedYear, wolvesIntroduced);
             wolfButton.setText(wolvesIntroduced ? "Remove Wolves" : "Introduce Wolves");
+            wolfStatusLabel.setText(wolvesIntroduced
+                    ? "Wolves are introduced in " + selectedYear
+                    : "");
         });
-
-        // Carrying Capacity and Grass Height Labels
-        carryingCapacityLabel = new Label("Carrying Capacity: N/A");
-        grassHeightLabel = new Label("Grass Height: N/A");
-
-        getChildren().addAll(yearSelector, wolfButton, carryingCapacityLabel, grassHeightLabel);
-    }
-
-    // Update simulation values dynamically
-    public void updateSimulationValues(double carryingCapacity, double grassHeight) {
-        carryingCapacityLabel.setText("Carrying Capacity: " + carryingCapacity);
-        grassHeightLabel.setText("Grass Height: " + grassHeight + " cm");
+    
+        // Add controls and labels to the layout
+        getChildren().addAll(
+            yearSelector, 
+            wolfButton, 
+            wolfStatusLabel, 
+            graphs.getCarryingCapacityLabel(), 
+            graphs.getGrassHeightLabel()
+        );
     }
 }
