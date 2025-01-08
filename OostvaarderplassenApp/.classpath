@@ -8,8 +8,8 @@
     </classpathentry>
 
     <!-- Source Directories -->
-    <classpathentry kind="src" path="src/main/java"/>
-    <classpathentry kind="src" path="src/test/java"/>
+    <!-- classpathentry kind="src" path="src/main/java"/>
+    <classpathentry kind="src" path="src/test/java"/-->
 
     <!-- Output for Compiled Application Code -->
     <classpathentry kind="src" output="target/classes" path="src/main/java">
