@@ -1,0 +1,47 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "system.Main",
+            "projectName": "OostvaardersplassenApp"
+        },
+        {
+            "type": "java",
+            "name": "MainApp",
+            "request": "launch",
+            "mainClass": "system.MainApp",
+            "projectName": "OostvaardersplassenApp"
+        },
+        {
+            "type": "java",
+            "name": "Graphs",
+            "request": "launch",
+            "mainClass": "gui.Graphs",
+            "projectName":  "--module-path C:/Program Files/JavaFX/javafx-sdk-23.0.1/lib --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "ExcelPlotExample",
+            "request": "launch",
+            "mainClass": "gui.ExcelPlotExample",
+            "projectName": "OostvaarderplassenApp"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "MainApp",
+            "request": "launch",
+            "mainClass": "system.Main",
+            "projectName": "OostvaarderplassenApp",
+            "vmArgs": "--module-path C:/Program Files/JavaFX/javafx-sdk-23.0.1/lib --add-modules javafx.controls,javafx.fxml"
+        }
+    ]
+}

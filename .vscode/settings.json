@@ -1,0 +1,16 @@
+{
+    "java.home": "C:/Program Files/Eclipse Adoptium/jdk-21.0.5.11-hotspot",  // Path to your JDK 17
+    "maven.executable.path": "C:/Program Files/Apache/Maven/apache-maven-3.9.9/bin/mvn",  // Path to your Maven executable (if not in PATH)
+    "java.configuration.classpath": [
+        "target/classes",
+        "target/test-classes",
+        "src/main/resources",
+        "src/test/resources"
+    ],
+    "cSpell.words": [
+        "konik",
+        "linechart",
+        "Oostvaarderplassen",
+        "oostvaardersplassen"
+    ]
+}
